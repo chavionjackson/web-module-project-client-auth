@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { axiosWithAuth } from "../utilis/axiosWithAuth";
 
 const NewFriend = () => {
@@ -23,7 +22,7 @@ const NewFriend = () => {
       .post("api/friends", friendData)
       .then((res) => {
         console.log(res)
-        
+
       })
       .catch((err) => {
         console.log(err);
