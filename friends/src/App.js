@@ -1,10 +1,13 @@
 import React from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { PrivateRoute } from "./components/PrivateRoute";
 import FriendsList from "./components/FriendList";
+import NewFriend from "./components/NewFriend";
 
 function App() {
   return (
@@ -31,7 +34,11 @@ function App() {
         <div className="outer">
           <div className="inner">
             <Switch>
-              <PrivateRoute path="/protected" component={FriendsList} />
+              <PrivateRoute path="/protected">
+              <h1 style={{padding: '4rem'}} >My Friends!</h1>
+                <NewFriend />
+                <FriendsList/>
+              </PrivateRoute>
               <Route exact path="/" component={Login} />
               <Route path="/sign-in" component={Login} />
             </Switch>

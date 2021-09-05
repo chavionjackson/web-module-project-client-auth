@@ -26,7 +26,6 @@ class FriendsList extends React.Component {
   render() {
     return (
       <div className="card-container">
-        <h1>My Friends!</h1>
         {this.state.friendsList.map((friend) => (
           <Card key={friend.id} style={{ width: "18rem" }}>
             <CardBody>
