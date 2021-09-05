@@ -1,51 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { axiosWithAuth } from "../utilis/axiosWithAuth";
 
-class NewFriend extends React.Component {
-  state = {
-    friend: {
-      id: Date.now,
-      name: "",
-      age: "",
-      email: "",
-    },
-  };
+const NewFriend = () => {
+    const [friendData, setFriendData] = useState({
+        id: Date.now(),
+        name: '',
+        age: '',
+        email: '',
+    })
 
-  handleChange = (e) => {
-    this.setState({
-      friend: {
-        ...this.state.friend,
+  const handleChange = (e) => {
+    setFriendData({
+        ...friendData,
         [e.target.name]: e.target.value,
-      },
     });
   };
 
-  addFriend = (e) => {
+  const addFriend = (e) => {
     e.preventDefault();
-    axios
-      .post("/api/friends", this.state.friend)
+    axiosWithAuth()
+      .post("api/friends", friendData)
       .then((res) => {
-        console.log(res);
+        console.log(res)
+        
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  render() {
-    console.log(this.state.friend);
+    console.log(friendData);
     return (
       <div className="new-friend">
-        <form onSubmit={this.login}>
+        <form onSubmit={addFriend}>
           <div className="form-group">
             <label>Name</label>
             <input
               type="name"
               name="name"
-              value={this.state.friend.name}
+              value={friendData.name}
               className="form-control"
               placeholder="Enter name"
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -54,10 +51,10 @@ class NewFriend extends React.Component {
             <input
               type="age"
               name="age"
-              value={this.state.friend.age}
+              value={friendData.age}
               className="form-control"
               placeholder="Enter age"
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -66,10 +63,10 @@ class NewFriend extends React.Component {
             <input
               type="email"
               name="email"
-              value={this.state.friend.email}
+              value={friendData.email}
               className="form-control"
               placeholder="Enter email"
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -80,6 +77,5 @@ class NewFriend extends React.Component {
       </div>
     );
   }
-}
 
 export default NewFriend;
