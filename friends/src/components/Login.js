@@ -1,17 +1,49 @@
 import React, { Component } from "react";
-
+import Loader from "react-loader-spinner";
+import axios from "axios";
 export default class Login extends Component {
+  state = {
+    credentials: {
+      username: "",
+      password: "",
+      isLoading: false,
+    },
+  };
+
+  handleChanges = (e) => {
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  login = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/api/login", this.state.credentials)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("token", res.data.payload);
+      })
+      .catch((err) => console.log("Whoops!", { err }));
+  };
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.login}>
         <h3>Log in</h3>
 
         <div className="form-group">
-          <label>Email</label>
+          <label>Username</label>
           <input
-            type="email"
+            type="username"
+            name="username"
+            value={this.state.credentials.username}
             className="form-control"
-            placeholder="Enter email"
+            placeholder="Enter username"
+            onChange={this.handleChanges}
           />
         </div>
 
@@ -19,8 +51,11 @@ export default class Login extends Component {
           <label>Password</label>
           <input
             type="password"
+            name="password"
+            value={this.state.credentials.password}
             className="form-control"
             placeholder="Enter password"
+            onChange={this.handleChanges}
           />
         </div>
 
@@ -43,6 +78,15 @@ export default class Login extends Component {
         <p className="forgot-password text-right">
           Forgot <a href="#">password?</a>
         </p>
+        {this.state.credentials.isLoading === true && (
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000}
+          />
+        )}
       </form>
     );
   }
