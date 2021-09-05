@@ -3,6 +3,8 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
+import { PrivateRoute } from "./components/PrivateRoute";
+import FriendsList from "./components/FriendList";
 
 function App() {
   return (
@@ -20,8 +22,7 @@ function App() {
                     Sign in
                   </Link>
                 </li>
-                <li className="nav-item">
-                </li>
+                <li className="nav-item"></li>
               </ul>
             </div>
           </div>
@@ -30,6 +31,7 @@ function App() {
         <div className="outer">
           <div className="inner">
             <Switch>
+              <PrivateRoute path="/protected" component={FriendsList} />
               <Route exact path="/" component={Login} />
               <Route path="/sign-in" component={Login} />
             </Switch>
